@@ -32,3 +32,22 @@ jobs:
       - name: Sts GetCallerIdentity
         run: |
           aws sts get-caller-identity
+deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: arn:aws:iam::060795931006:role/GitHubAction-AssumeRoleWithAction
+          role-session-name: GitHub_to_AWS_via_FederatedOIDC
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Deploy on the ec2
+        run: |
+          aws ssm send-command \
+            --document-name "AWS-RunShellScript" \
+            --targets "Key=instanceIds,Values=i-02a523784e17a1cb1" \
+            --comment "Deploy app as ubuntu" \
+            --parameters commands=["sudo su - ubuntu -c 'pm2 stop devops && cd ~/devops && git pull origin master && npm install && pm2 start index.js --name devops"] \
+            --region ${{ env.AWS_REGION }}
+
