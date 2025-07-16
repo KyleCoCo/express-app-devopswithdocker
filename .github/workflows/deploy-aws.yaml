@@ -11,7 +11,7 @@ on:
 env:
   AWS_REGION : us-east-1
 
-# Permission can be added at job level or workflow level    
+# Permission can be added at job level or workflow level
 permissions:
       id-token: write   # This is required for requesting the JWT
       contents: read    # This is required for actions/checkout
@@ -48,6 +48,6 @@ jobs:
             --document-name "AWS-RunShellScript" \
             --targets "Key=instanceIds,Values=i-02a523784e17a1cb1" \
             --comment "Deploy app as ubuntu" \
-            --parameters commands=["sudo su - ubuntu -c 'pm2 stop devops && cd ~/devops && git pull origin master && npm install && pm2 start index.js --name devops'"] \
+            --parameters commands=["sudo su - ubuntu", "pm2 stop devops", "cd ~/devops", "git pull origin master", "npm install", "pm2 start index.js --name devops"] \
             --region ${{ env.AWS_REGION }}
 
