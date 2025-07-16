@@ -48,6 +48,6 @@ jobs:
             --document-name "AWS-RunShellScript" \
             --targets "Key=instanceIds,Values=i-02a523784e17a1cb1" \
             --comment "Deploy app as ubuntu" \
-            --parameters commands=["sudo su - ubuntu -c 'pm2 stop devops && cd ~/devops && git pull origin master && npm install && pm2 start index.js --name devops"] \
+            --parameters commands=["sudo su - ubuntu -c 'pm2 stop devops && cd ~/devops && git pull origin master && npm install && pm2 start index.js --name devops'"] \
             --region ${{ env.AWS_REGION }}
 
