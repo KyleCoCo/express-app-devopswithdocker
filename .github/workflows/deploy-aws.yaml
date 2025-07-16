@@ -50,4 +50,5 @@ jobs:
             --comment "Deploy app as ubuntu" \
             --parameters 'commands=["sudo su - ubuntu -c '\''cd ~/devops && pm2 stop devops || true && git pull origin master && npm install && pm2 start index.js --name devops'\''"]' \
             --region ${{ env.AWS_REGION }}
+            
 
